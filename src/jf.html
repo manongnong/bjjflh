@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2022年北京积分落户线性回归</title>
+    <script src="echarts.js"></script>
+    <script src="ecStat.js"></script>
+</head>
+<body>
+<div id="main" style="width: 600px;height:400px;"></div>
+</body>
+<script type="text/javascript">
+
+    var myChart = echarts.init(document.getElementById('main'));
+    echarts.registerTransform(ecStat.transform.regression);
+
+    const data = [
+        //--2022 加入积分落户数据 回归的斜率为每分的人数
+        [96.42, 36001],
+        [98.26, 29001],
+        [101.46, 17001],
+        [101.84, 16001],
+        [102.01, 15001],
+        [102.29, 14001],
+        [102.92, 13001],
+        [103.21, 12001],
+        [103.54, 10001],
+        [103.88, 9001],
+        [104.30, 8001],
+        [104.58, 7001],
+        [104.96, 6001]
+    ]
+    var option = {
+        dataset: [
+            {
+                source: data
+            },
+            {
+                transform: {
+                    type: 'ecStat:regression'
+                    // 'linear' by default.
+                    // config: { method: 'linear', formulaOn: 'end'}
+                }
+            }
+        ],
+        title: {
+            text: 'Linear Regression',
+            subtext: 'By ecStat.regression',
+            sublink: 'https://github.com/ecomfe/echarts-stat',
+            left: 'center'
+        },
+        legend: {
+            bottom: 5
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross'
+            }
+        },
+        xAxis: {
+            min: 90,
+            splitLine: {
+                lineStyle: {
+                    type: 'dashed'
+                }
+            }
+        },
+        yAxis: {
+            splitLine: {
+                lineStyle: {
+                    type: 'dashed'
+                }
+            }
+        },
+        series: [
+            {
+                name: 'scatter',
+                type: 'scatter'
+            },
+            {
+                name: 'line',
+                type: 'line',
+                datasetIndex: 1,
+                symbolSize: 0.1,
+                symbol: 'circle',
+                label: {show: true, fontSize: 16},
+                labelLayout: {dx: -20},
+                encode: {label: 2, tooltip: 1}
+            }
+        ]
+    };
+    myChart.setOption(option);
+</script>
+</html>
